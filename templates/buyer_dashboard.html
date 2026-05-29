@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Buyer Dashboard
+            </h1>
+
+            <p>
+                Manage your saved properties and activities
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ANALYTICS -->
+<!-- ANALYTICS -->
+
+<div class="analytics-grid">
+
+    <!-- FAVORITES -->
+
+    <a href="{% url 'buyer_favorites' %}"
+       class="analytics-card-link">
+
+        <div class="analytics-card">
+
+            <h3>
+                {{ total_favorites }}
+            </h3>
+
+            <p>
+                Saved Properties
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <!-- RECENTLY VIEWED -->
+
+    <a href="{% url 'buyer_recent' %}"
+       class="analytics-card-link">
+
+        <div class="analytics-card">
+
+            <h3>
+                {{ total_recent }}
+            </h3>
+
+            <p>
+                Recently Viewed
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <!-- INQUIRIES -->
+
+    <a href="{% url 'buyer_inquiries' %}"
+       class="analytics-card-link">
+
+        <div class="analytics-card">
+
+            <h3>
+                {{ total_inquiries }}
+            </h3>
+
+            <p>
+                Inquiries Sent
+            </p>
+
+        </div>
+
+    </a>
+
+</div>
+
+</section>
+
+
+<!-- FAVORITES -->
+
+<section class="dashboard-section">
+
+    <div class="dashboard-section-title">
+
+        <h2>
+            Saved Properties
+        </h2>
+
+    </div>
+
+    <div class="property-grid">
+
+        {% for property in favorite_properties %}
+
+        <a href="{% url 'property_detail' property.id %}"
+           class="property-link">
+
+            <div class="property-card dashboard-property-card">
+
+                <img src="{{ property.image.url }}">
+
+                <div class="property-content">
+
+                    <h3>
+                        {{ property.title }}
+                    </h3>
+
+                    <p>
+                        {{ property.location }}
+                    </p>
+
+                    <h4>
+                        ₹ {{ property.price }}
+                    </h4>
+
+                    <p class="property-info">
+
+                        {{ property.bedrooms }} Beds •
+
+                        {{ property.bathrooms }} Baths •
+
+                        {{ property.area }} sqft
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No saved properties
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- RECENTLY VIEWED -->
+
+<section class="dashboard-section">
+
+    <div class="dashboard-section-title">
+
+        <h2>
+            Recently Viewed
+        </h2>
+
+    </div>
+
+    <div class="property-grid">
+
+        {% for viewed in recent_properties %}
+
+        <a href="{% url 'property_detail' viewed.property.id %}"
+           class="property-link">
+
+            <div class="property-card dashboard-property-card">
+
+                <img src="{{ viewed.property.image.url }}">
+
+                <div class="property-content">
+
+                    <h3>
+                        {{ viewed.property.title }}
+                    </h3>
+
+                    <p>
+                        {{ viewed.property.location }}
+                    </p>
+
+                    <h4>
+                        ₹ {{ viewed.property.price }}
+                    </h4>
+
+                    <p class="property-info">
+
+                        {{ viewed.property.bedrooms }} Beds •
+
+                        {{ viewed.property.bathrooms }} Baths •
+
+                        {{ viewed.property.area }} sqft
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No recently viewed properties
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- INQUIRIES -->
+
+<section class="dashboard-inquiries">
+
+    <div class="dashboard-section-title">
+
+        <h2>
+            My Inquiries
+        </h2>
+
+    </div>
+
+    <div class="inquiries-container">
+
+        {% for inquiry in inquiries %}
+
+        <div class="inquiry-card">
+
+            <div class="inquiry-top">
+
+                <h3>
+                    {{ inquiry.property.title }}
+                </h3>
+
+                <span>
+                    {{ inquiry.created_at }}
+                </span>
+
+            </div>
+
+            <p class="inquiry-message">
+
+                {{ inquiry.message }}
+
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No inquiries sent yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

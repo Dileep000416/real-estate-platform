@@ -1,0 +1,434 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="detail-section">
+
+    <div class="detail-container">
+
+        <img src="{{ property.image.url }}" alt="property">
+
+        <div class="detail-content">
+
+            <div class="property-main-content">
+
+                <h1>{{ property.title }}</h1>
+
+                <div class="rating-box">
+
+                    <span>
+                        ⭐ {{ average_rating }}
+                    </span>
+
+                    <p>
+                        ({{ total_reviews }} Reviews)
+                    </p>
+
+                </div>
+
+                <p class="location">
+                    {{ property.location }}
+                </p>
+
+                <h2>
+                    ₹ {{ property.price }}
+                </h2>
+
+                <p class="detail-status">
+                    For {{ property.status }}
+                </p>
+
+                <h3>
+                    {{ property.bedrooms }} Bedrooms •
+                    {{ property.bathrooms }} Bathrooms •
+                    {{ property.area }} sqft
+                </h3>
+
+               <button
+    id="favoriteBtn"
+    class="favorite-btn
+    {% if request.user in property.favorites.all %}
+        saved
+    {% endif %}
+    "
+    data-property-id="{{ property.id }}"
+>
+
+    {% if request.user in property.favorites.all %}
+
+        ❤️ Saved
+
+    {% else %}
+
+        🤍 Save Property
+
+    {% endif %}
+
+</button>
+
+                <h3>
+                    Property Type:
+                    {{ property.property_type }}
+                </h3>
+
+                <p class="description">
+                    {{ property.description }}
+                </p>
+
+                <div class="map-section">
+
+                    <h3>
+                        Property Location
+                    </h3>
+
+                    <div class="map-container">
+
+                        {{ property.map_link|safe }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="property-sidebar">
+
+                <div class="agent-card">
+
+                    <h2>
+                        Agent Details
+                    </h2>
+
+                    <div class="agent-info">
+
+                        {% if property.agent.profile.profile_image %}
+
+                        <img
+                            src="{{ property.agent.profile.profile_image.url }}"
+                            alt="agent"
+                        >
+
+                        {% endif %}
+
+                        <div>
+
+                            <h3>
+
+                                <a href="{% url 'agent_profile' property.agent.id %}">
+
+                                    {{ property.agent.username }}
+
+                                </a>
+
+                            </h3>
+
+                            <p>
+                                {{ property.agent.email }}
+                            </p>
+
+                            <p>
+                                {{ property.agent.profile.phone }}
+                            </p>
+
+                            <p>
+                                {{ property.agent.profile.bio }}
+                            </p>
+
+                            <a
+                                href="https://wa.me/{{ property.agent.profile.phone }}"
+                                target="_blank"
+                                class="whatsapp-btn">
+
+                                WhatsApp
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <form
+                    action="{% url 'send_inquiry' property.id %}"
+                    method="POST">
+
+                    {% csrf_token %}
+
+                    <textarea
+                        name="message"
+                        placeholder="Send inquiry to owner..."
+                        required>
+                    </textarea>
+
+                    <button type="submit">
+
+                        Send Inquiry
+
+                    </button>
+
+                    <a
+                        href="{% url 'chat' property.id property.agent.id %}"
+                        class="chat-btn">
+
+                        Chat With Owner
+
+                    </a>
+
+                </form>
+
+                <div class="visit-section">
+
+                    <h2>
+                        Schedule Property Visit
+                    </h2>
+
+                    <form
+                        action="{% url 'schedule_visit' property.id %}"
+                        method="POST"
+                        class="visit-form">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="date"
+                            name="visit_date"
+                            required
+                        >
+
+                        <input
+                            type="time"
+                            name="visit_time"
+                            required
+                        >
+
+                        <button type="submit">
+
+                            Schedule Visit
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="gallery-section">
+
+    <div class="gallery-header">
+
+        <h2>
+            Property Gallery
+        </h2>
+
+    </div>
+
+    {% if property.gallery_images.all %}
+
+    <div class="property-slider">
+
+        <!-- MAIN IMAGE -->
+
+        <div class="main-slider-image">
+
+            {% for image in property.gallery_images.all %}
+
+                {% if forloop.first %}
+
+                    <img
+                    src="{{ image.image.url }}"
+                    id="mainPropertyImage"
+                    >
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+        <!-- THUMBNAILS -->
+
+        <div class="thumbnail-container">
+
+            {% for image in property.gallery_images.all %}
+
+                <img
+                src="{{ image.image.url }}"
+                class="thumbnail-image"
+                onclick="changePropertyImage(this)"
+                >
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+   <div class="empty-gallery">
+    <h3>No Gallery Images</h3>
+    <p>Owner has not uploaded gallery photos yet.</p>
+</div>
+    {% endif %}
+
+</section>
+
+
+<section class="review-section">
+
+    <h2>
+        Reviews & Ratings
+    </h2>
+
+    {% if user.is_authenticated %}
+
+    <form
+        action="{% url 'add_review' property.id %}"
+        method="POST"
+        class="review-form">
+
+        {% csrf_token %}
+
+        <select name="rating" required>
+
+            <option value="">
+                Select Rating
+            </option>
+
+            <option value="1">
+                ⭐ 1 Star
+            </option>
+
+            <option value="2">
+                ⭐⭐ 2 Stars
+            </option>
+
+            <option value="3">
+                ⭐⭐⭐ 3 Stars
+            </option>
+
+            <option value="4">
+                ⭐⭐⭐⭐ 4 Stars
+            </option>
+
+            <option value="5">
+                ⭐⭐⭐⭐⭐ 5 Stars
+            </option>
+
+        </select>
+
+        <textarea
+            name="comment"
+            placeholder="Write your review..."
+            required>
+        </textarea>
+
+        <button type="submit">
+
+            Submit Review
+
+        </button>
+
+    </form>
+
+    {% endif %}
+
+    <div class="review-container">
+
+        {% for review in property.review_set.all %}
+
+        <div class="review-card">
+
+            <h3>
+                {{ review.user.username }}
+            </h3>
+
+            <p>
+                ⭐ {{ review.rating }}/5
+            </p>
+
+            <p>
+                {{ review.comment }}
+            </p>
+
+            <small>
+                {{ review.created_at }}
+            </small>
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            No reviews yet
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+{% if related_properties %}
+
+<section class="compact-related-section">
+
+    <div class="compact-header">
+
+        <h2>
+            Similar Properties
+        </h2>
+
+        <a href="/">
+            View More
+        </a>
+
+    </div>
+
+    <div class="compact-related-slider">
+
+        {% for item in related_properties %}
+
+        <a href="{% url 'property_detail' item.id %}"
+           class="compact-property-card">
+
+            <img src="{{ item.image.url }}">
+
+            <div class="compact-property-content">
+
+                <h3>
+                    {{ item.title }}
+                </h3>
+
+                <p>
+                    {{ item.location }}
+                </p>
+
+                <h4>
+                    ₹ {{ item.price }}
+                </h4>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endblock %}

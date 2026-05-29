@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+
+        <div>
+            <h1>
+                Owner Dashboard
+            </h1>
+
+            <p>
+                Manage your properties, inquiries and activities
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="analytics-grid">
+
+    <!-- INQUIRIES -->
+
+    <a href="{% url 'owner_inquiries' %}"
+       class="analytics-card-link">
+
+        <div class="analytics-card">
+
+            <h3>
+                {{ total_inquiries }}
+            </h3>
+
+            <p>
+                Inquiries
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <!-- VISITS -->
+
+    <a href="{% url 'owner_visits' %}"
+       class="analytics-card-link">
+
+        <div class="analytics-card">
+
+            <h3>
+                {{ total_visits }}
+            </h3>
+
+            <p>
+                Scheduled Visits
+            </p>
+
+        </div>
+
+    </a>
+
+
+    <!-- FAVORITES -->
+
+    <a href="{% url 'owner_favorites' %}"
+       class="analytics-card-link">
+
+        <div class="analytics-card">
+
+            <h3>
+                {{ total_favorites }}
+            </h3>
+
+            <p>
+                Favorites
+            </p>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+    <div class="dashboard-section-title">
+
+        <h2>
+            My Properties
+        </h2>
+
+    </div>
+
+
+    <div class="property-grid">
+
+        {% for property in properties %}
+
+        <div class="property-card dashboard-property-card">
+
+            <img src="{{ property.image.url }}">
+
+            <div class="property-content">
+
+                <h3>
+                    {{ property.title }}
+                </h3>
+
+                <p>
+                    {{ property.location }}
+                </p>
+
+                <h4>
+                    ₹ {{ property.price }}
+                </h4>
+
+                <div class="action-buttons">
+
+                    <a href="/edit-property/{{property.id}}/"
+                       class="edit-btn">
+
+                        Edit
+
+                    </a>
+
+                    <a href="/delete-property/{{property.id}}/"
+                       class="delete-btn">
+
+                        Delete
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No properties added yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<section class="dashboard-inquiries">
+
+    <div class="dashboard-section-title">
+
+        <h2>
+            Recent Inquiries
+        </h2>
+
+    </div>
+
+    <div class="inquiries-container">
+
+        {% for inquiry in inquiries %}
+
+        <div class="inquiry-card">
+
+            <div class="inquiry-top">
+
+                <h3>
+                    {{ inquiry.property.title }}
+                </h3>
+
+                <span>
+                    {{ inquiry.created_at }}
+                </span>
+
+            </div>
+
+            <p class="inquiry-user">
+
+                {{ inquiry.user.username }}
+
+            </p>
+
+            <p class="inquiry-message">
+
+                {{ inquiry.message }}
+
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No inquiries yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

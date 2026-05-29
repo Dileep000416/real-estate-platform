@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="agent-profile-section">
+
+    <div class="agent-profile-card">
+
+        {% if agent.profile.profile_image %}
+
+            <img
+                src="{{ agent.profile.profile_image.url }}"
+                class="agent-profile-image"
+            >
+
+        {% endif %}
+
+        <h1>
+            {{ agent.username }}
+        </h1>
+
+        <p>
+            {{ agent.email }}
+        </p>
+
+        <p>
+            {{ agent.profile.phone }}
+        </p>
+
+        <p class="agent-bio">
+            {{ agent.profile.bio }}
+        </p>
+
+        <a
+            href="https://wa.me/{{ agent.profile.phone }}"
+            target="_blank"
+            class="whatsapp-btn">
+
+            Chat on WhatsApp
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="featured-section">
+
+    <h2>
+        Properties Listed by {{ agent.username }}
+    </h2>
+
+    <div class="property-grid">
+
+        {% for property in properties %}
+
+        <a
+            href="{% url 'property_detail' property.id %}"
+            class="property-link">
+
+            <div class="property-card">
+
+                <img
+                    src="{{ property.image.url }}"
+                    alt="property"
+                >
+
+                <div class="property-content">
+
+                    <h3>
+                        {{ property.title }}
+                    </h3>
+
+                    <p>
+                        {{ property.location }}
+                    </p>
+
+                    <h4>
+                        ₹ {{ property.price }}
+                    </h4>
+
+                    <p class="status-badge">
+                        For {{ property.status }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <h3>
+            No properties added yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

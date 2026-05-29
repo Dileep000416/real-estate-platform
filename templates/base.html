@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstateHub</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=600">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="nav-left">
+
+        <a href="/" class="logo">
+            EstateHub
+        </a>
+        <button id="themeToggle" class="theme-toggle">
+
+    🌙
+
+</button>
+    </div>
+
+    <!-- HAMBURGER -->
+
+    <div class="menu-toggle" id="menuToggle">
+
+        ☰
+
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+
+        <li>
+            <a href="/">
+                Home
+            </a>
+        </li>
+
+        {% if user.is_authenticated %}
+
+            <li>
+                <a href="/dashboard/">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="/favorites/">
+                    Favorites
+                </a>
+            </li>
+
+            <li>
+                <a href="/inbox/">
+                    Inbox
+                </a>
+            </li>
+
+            <li>
+                <a href="/notifications/">
+                    Notifications
+                </a>
+            </li>
+
+            {% if user.profile.role == 'owner' %}
+
+            <li>
+                <a href="/add-property/" class="nav-btn">
+                    Add Property
+                </a>
+            </li>
+
+            {% endif %}
+
+            <li class="profile-dropdown">
+
+                <div class="profile-trigger">
+
+                    {% if user.profile.profile_image %}
+
+                        <img
+                        src="{{ user.profile.profile_image.url }}"
+                        class="nav-profile-img"
+                        >
+
+                    {% else %}
+
+                        <img
+                        src="https://ui-avatars.com/api/?name={{ user.username }}"
+                        class="nav-profile-img"
+                        >
+
+                    {% endif %}
+
+                    <div class="profile-info">
+
+                        <span class="profile-name">
+                            {{ user.username }}
+                        </span>
+
+                        <small class="profile-role">
+                            {{ user.profile.role }}
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="dropdown-menu">
+
+    <a href="/dashboard/">
+        Dashboard
+    </a>
+
+    <a href="/favorites/">
+        Favorites
+    </a>
+
+    <a href="{% url 'edit_profile' %}">
+        Edit Profile
+    </a>
+
+    <a href="/logout/">
+        Logout
+    </a>
+
+</div>
+
+            </li>
+
+        {% else %}
+
+            <li>
+                <a href="/signup/">
+                    Signup
+                </a>
+            </li>
+
+            <li>
+                <a href="/login/" class="login-btn">
+                    Login
+                </a>
+            </li>
+
+        {% endif %}
+
+    </ul>
+
+</nav>
+
+<div class="main-container">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+<div id="toastContainer"></div>
+
+
+<script src="{% static 'js/app.js' %}?v=10"></script>
+<footer class="site-footer">
+
+    <div class="footer-content">
+
+        <h3>EstateHub</h3>
+
+        <p>
+            Find, Compare and Connect with Property Owners.
+        </p>
+
+        <small>
+            © 2026 EstateHub. All Rights Reserved.
+        </small>
+
+    </div>
+
+</footer>
+</body>
+</html>

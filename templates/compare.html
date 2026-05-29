@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="compare-page">
+
+    <div class="compare-header">
+
+        <span class="compare-tag">
+            Smart Comparison
+        </span>
+
+        <h1>
+            Compare Properties
+        </h1>
+
+        <p>
+            Analyze pricing, features and property details
+            side by side before making your decision.
+        </p>
+
+    </div>
+
+    {% if properties %}
+
+    <div class="compare-table-wrapper">
+
+        <table class="compare-table">
+
+            <thead>
+
+                <tr>
+
+                    <th class="feature-column">
+                        Features
+                    </th>
+
+                    {% for property in properties %}
+
+                    <th class="property-column">
+
+                        <div class="compare-property-card">
+
+                            <img
+                            src="{{ property.image.url }}"
+                            class="compare-image"
+                            >
+
+                            <h3>
+                                {{ property.title }}
+                            </h3>
+
+                            <p>
+                                {{ property.location }}
+                            </p>
+
+                            <h2>
+                                ₹ {{ property.price }}
+                            </h2>
+
+                        </div>
+
+                    </th>
+
+                    {% endfor %}
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td class="feature-name">
+                        Property Type
+                    </td>
+
+                    {% for property in properties %}
+
+                    <td>
+                        {{ property.property_type }}
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                <tr>
+
+                    <td class="feature-name">
+                        Status
+                    </td>
+
+                    {% for property in properties %}
+
+                    <td>
+                        {{ property.status }}
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                <tr>
+
+                    <td class="feature-name">
+                        Bedrooms
+                    </td>
+
+                    {% for property in properties %}
+
+                    <td>
+                        {{ property.bedrooms }}
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                <tr>
+
+                    <td class="feature-name">
+                        Bathrooms
+                    </td>
+
+                    {% for property in properties %}
+
+                    <td>
+                        {{ property.bathrooms }}
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                <tr>
+
+                    <td class="feature-name">
+                        Area
+                    </td>
+
+                    {% for property in properties %}
+
+                    <td>
+                        {{ property.area }} sqft
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-compare">
+
+        <h3>
+            No properties added for comparison
+        </h3>
+
+        <p>
+            Add properties to compare features side by side.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

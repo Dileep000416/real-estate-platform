@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Property Favorites
+            </h1>
+
+            <p>
+                Properties saved by buyers
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="property-grid">
+
+        {% for property in properties %}
+
+        <div class="property-card">
+
+            <img src="{{ property.image.url }}">
+
+            <div class="property-content">
+
+                <h3>
+                    {{ property.title }}
+                </h3>
+
+                <p>
+                    {{ property.location }}
+                </p>
+
+                <h4>
+                    ❤️ {{ property.favorites.count }} Favorites
+                </h4>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No favorites yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

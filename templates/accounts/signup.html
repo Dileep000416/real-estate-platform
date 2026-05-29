@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-left">
+
+        <h1>
+            Join EstateHub
+        </h1>
+
+        <p>
+            Buy, sell and explore premium
+            properties with a modern experience.
+        </p>
+
+    </div>
+
+    <div class="auth-card">
+
+        <h2>
+            Create Account
+        </h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Signup
+            </button>
+
+        </form>
+
+        <div class="bottom-text">
+
+            Already have an account?
+
+            <a href="/login/">
+                Login
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

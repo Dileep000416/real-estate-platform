@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="chat-page">
+
+    <div class="chat-wrapper">
+
+        <!-- CHAT SIDEBAR -->
+
+        <div class="chat-sidebar">
+
+            <div class="chat-user-info">
+
+                {% if receiver.profile.profile_image %}
+
+                    <img
+                    src="{{ receiver.profile.profile_image.url }}"
+                    class="chat-profile-img"
+                    >
+
+                {% else %}
+
+                    <img
+                    src="https://ui-avatars.com/api/?name={{ receiver.username }}"
+                    class="chat-profile-img"
+                    >
+
+                {% endif %}
+
+                <div>
+
+                    <h3>
+                        {{ receiver.username }}
+                    </h3>
+
+                    <p>
+                        {{ property.title }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHAT AREA -->
+
+        <div class="chat-container">
+
+            <div class="chat-header">
+
+                <h2>
+                    Property Discussion
+                </h2>
+
+                <p>
+                    {{ property.location }}
+                </p>
+
+            </div>
+
+            <div class="chat-messages">
+
+                {% for msg in messages %}
+
+                    <div class="
+                        {% if msg.sender == request.user %}
+                            sent-message
+                        {% else %}
+                            received-message
+                        {% endif %}
+                    ">
+
+                        <div class="message-bubble">
+
+                            <p>
+                                {{ msg.message }}
+                            </p>
+
+                            <small>
+                                {{ msg.timestamp }}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-chat">
+
+                        <p>
+                            Start your conversation
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <form method="POST"
+                  class="chat-form">
+
+                {% csrf_token %}
+
+                <input
+                    type="text"
+                    name="message"
+                    placeholder="Type your message..."
+                    required
+                >
+
+                <button type="submit">
+
+                    Send
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

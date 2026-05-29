@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero-section">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="hero-tag">
+
+            #1 Real Estate Platform
+
+        </span>
+
+        <h1>
+
+            Find Your Perfect
+            Dream Property
+
+        </h1>
+
+        <p>
+
+            Discover premium apartments, villas,
+            and commercial properties across
+            top locations in India.
+
+        </p>
+
+        <form method="GET" class="search-box modern-search">
+
+    <input
+        type="text"
+        name="query"
+        id="liveSearchInput"
+        placeholder="Search properties..."
+        value="{{ request.GET.query }}"
+    >
+
+    <select name="property_type">
+
+        <option value="">
+            Type
+        </option>
+
+        <option value="Apartment">
+            Apartment
+        </option>
+
+        <option value="Villa">
+            Villa
+        </option>
+
+        <option value="Commercial">
+            Commercial
+        </option>
+
+    </select>
+
+    <select name="status">
+
+        <option value="">
+            Status
+        </option>
+
+        <option value="Sale">
+            Sale
+        </option>
+
+        <option value="Rent">
+            Rent
+        </option>
+
+    </select>
+
+    <select name="sort">
+
+        <option value="">
+            Sort
+        </option>
+
+        <option value="low">
+            Low Price
+        </option>
+
+        <option value="high">
+            High Price
+        </option>
+
+        <option value="latest">
+            Latest
+        </option>
+
+    </select>
+
+    <button type="submit">
+
+        Search
+
+    </button>
+
+</form>
+    
+    </div>
+
+</section>
+
+
+<section class="featured-section">
+    <div class="container">
+
+   <div class="section-heading">
+
+    <h2>
+        Featured Properties
+    </h2>
+
+    <p>
+        Explore premium listings curated
+        for modern living.
+    </p>
+
+</div>
+
+    <div class="property-grid">
+
+        {% for property in properties %}
+
+        <a href="{% url 'property_detail' property.id %}"
+           class="property-link">
+
+            <div
+    class="property-card searchable-property"
+    data-title="{{ property.title|lower }}"
+    data-location="{{ property.location|lower }}"
+    data-type="{{ property.property_type|lower }}"
+>
+
+                <img src="{{ property.image.url }}"
+                     alt="property">
+
+                <div class="property-content">
+                    <div class="badge-container">
+
+                    <h3>
+                        {{ property.title }}
+                    </h3>
+
+                    <p>
+                        {{ property.location }}
+                    </p>
+
+                    <h4>
+                        ₹ {{ property.price }}
+                    </h4>
+
+                    <a href="{% url 'add_to_compare' property.id %}"
+                       class="compare-btn">
+
+                        Compare
+
+                    </a>
+
+                    
+
+    <p class="status-badge">
+        For {{ property.status }}
+    </p>
+
+    {% if property.is_featured %}
+
+        <span class="featured-badge">
+            Featured
+        </span>
+
+    {% endif %}
+
+    {% if property.is_sold %}
+
+        <span class="sold-badge">
+            Sold
+        </span>
+
+    {% endif %}
+
+</div>
+
+                    <p class="property-info">
+
+                        {{ property.bedrooms }} Beds •
+
+                        {{ property.bathrooms }} Baths •
+
+                        {{ property.area }} sqft
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <h3>
+            No properties found
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+
+    <div class="pagination-wrapper">
+
+    <div class="pagination">
+
+        {% if properties.has_previous %}
+
+            <a href="?page=1&query={{ request.GET.query }}">
+                First
+            </a>
+
+            <a href="?page={{ properties.previous_page_number }}&query={{ request.GET.query }}">
+                Previous
+            </a>
+
+        {% endif %}
+
+        <span>
+            Page {{ properties.number }}
+            of
+            {{ properties.paginator.num_pages }}
+        </span>
+
+        {% if properties.has_next %}
+
+            <a href="?page={{ properties.next_page_number }}&query={{ request.GET.query }}">
+                Next
+            </a>
+
+            <a href="?page={{ properties.paginator.num_pages }}&query={{ request.GET.query }}">
+                Last
+            </a>
+
+        {% endif %}
+
+    </div>
+</div>
+</div>
+</section>
+<section class="why-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <h2>
+                Why Choose EstateHub
+            </h2>
+
+            <p>
+                Everything you need to find and manage your dream property.
+            </p>
+
+        </div>
+
+        <div class="why-grid">
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    🏡
+                </div>
+
+                <h3>
+                    Verified Properties
+                </h3>
+
+                <p>
+                    Every listing is verified to ensure genuine property information.
+                </p>
+
+            </div>
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    📍
+                </div>
+
+                <h3>
+                    Prime Locations
+                </h3>
+
+                <p>
+                    Explore properties across top cities and premium localities.
+                </p>
+
+            </div>
+
+            <div class="why-card">
+
+                <div class="why-icon">
+                    💰
+                </div>
+
+                <h3>
+                    Best Pricing
+                </h3>
+
+                <p>
+                    Compare properties easily and find the best market deals.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

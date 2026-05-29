@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Notifications
+            </h1>
+
+            <p>
+                Latest updates from your properties
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="inbox-container">
+
+        {% for notification in notifications %}
+
+        <div class="inbox-card">
+
+            <p>
+                {{ notification.message }}
+            </p>
+
+            <small>
+                {{ notification.created_at }}
+            </small>
+
+        </div>
+
+        {% empty %}
+
+        <h3>
+            No notifications yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

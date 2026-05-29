@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="featured-section">
+
+    <h2>Saved Properties</h2>
+
+    <div class="property-container">
+
+        {% for property in properties %}
+
+        <a href="{% url 'property_detail' property.id %}"
+           class="property-link">
+
+            <div class="property-card">
+
+                <img src="{{ property.image.url }}">
+
+                <div class="property-content">
+
+                    <h3>{{ property.title }}</h3>
+
+                    <p>{{ property.location }}</p>
+
+                    <h4>₹ {{ property.price }}</h4>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <h3>No saved properties yet</h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

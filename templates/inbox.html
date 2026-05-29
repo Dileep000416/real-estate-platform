@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="inbox-page">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Inbox
+            </h1>
+
+            <p>
+                Your property conversations
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="inbox-container">
+
+        {% for chat in chats %}
+
+        <div class="inbox-card">
+
+            <div class="inbox-top">
+
+                <div class="inbox-user">
+
+                    {% if chat.sender == request.user %}
+
+                        <img
+                        src="https://ui-avatars.com/api/?name={{ chat.receiver.username }}"
+                        >
+
+                        <div>
+
+                            <h3>
+                                {{ chat.receiver.username }}
+                            </h3>
+
+                            <p>
+                                {{ chat.property.title }}
+                            </p>
+
+                        </div>
+
+                    {% else %}
+
+                        <img
+                        src="https://ui-avatars.com/api/?name={{ chat.sender.username }}"
+                        >
+
+                        <div>
+
+                            <h3>
+                                {{ chat.sender.username }}
+                            </h3>
+
+                            <p>
+                                {{ chat.property.title }}
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <small>
+                    {{ chat.timestamp }}
+                </small>
+
+            </div>
+
+            <p class="last-message">
+
+                {{ chat.message }}
+
+            </p>
+
+            <a href="{% url 'chat' chat.property.id chat.receiver.id %}"
+               class="open-chat-btn">
+
+                Open Chat
+
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No conversations yet
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

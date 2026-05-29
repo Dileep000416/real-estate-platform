@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="dashboard-wrapper">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Scheduled Visits
+            </h1>
+
+            <p>
+                Buyers who scheduled visits
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="inquiries-container">
+
+        {% for visit in visits %}
+
+        <div class="inquiry-card">
+
+            <div class="inquiry-top">
+
+                <h3>
+                    {{ visit.user.username }}
+                </h3>
+
+                <span>
+                    {{ visit.visit_date }}
+                </span>
+
+            </div>
+
+            <p class="inquiry-user">
+
+                Property:
+                {{ visit.property.title }}
+
+            </p>
+
+            <p class="inquiry-message">
+
+                Visit Time:
+                {{ visit.visit_time }}
+
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <h3 class="empty-text">
+            No scheduled visits
+        </h3>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

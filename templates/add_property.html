@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="add-property-page">
+
+    <div class="add-property-wrapper">
+
+        <!-- LEFT SIDE -->
+
+        <div class="property-form-left">
+
+            <span class="form-tag">
+                EstateHub Owner Panel
+            </span>
+
+            <h1>
+                Add New Property
+            </h1>
+
+            <p>
+                Create premium property listings with
+                complete details, pricing and images.
+            </p>
+
+            <div class="form-features">
+
+                <div class="feature-item">
+                    Premium Listing Experience
+                </div>
+
+                <div class="feature-item">
+                    Multi Image Support
+                </div>
+
+                <div class="feature-item">
+                    Buyer Inquiry System
+                </div>
+
+                <div class="feature-item">
+                    Smart Property Dashboard
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="property-form-card">
+
+            <div class="form-header">
+
+                <h2>
+                    Property Details
+                </h2>
+
+                <p>
+                    Fill all required information
+                </p>
+
+            </div>
+
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  class="modern-property-form">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit">
+
+                    Add Property
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
