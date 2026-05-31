@@ -6,12 +6,21 @@ from .models import Profile
 
 class SignupForm(UserCreationForm):
 
+    ROLE_CHOICES = (
+        ('buyer', 'Buyer'),
+        ('owner', 'Owner'),
+    )
+
     username = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Enter username'})
     )
 
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'placeholder': 'Enter email'})
+    )
+
+    role = forms.ChoiceField(
+        choices=ROLE_CHOICES
     )
 
     password1 = forms.CharField(
@@ -26,8 +35,13 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
-
+        fields = [
+            'username',
+            'email',
+            'role',
+            'password1',
+            'password2'
+        ]
 
 class PropertyForm(forms.ModelForm):
 

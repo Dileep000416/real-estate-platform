@@ -117,9 +117,12 @@ def signup_view(request):
 
         if form.is_valid():
             user = form.save()
+
             Profile.objects.create(
-                user=user
-        )
+                user=user,
+                role=form.cleaned_data['role']
+            )
+
             login(request, user)
             return redirect('home')
 
