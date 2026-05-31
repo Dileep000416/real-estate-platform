@@ -136,8 +136,5 @@ path(
     views.create_render_admin,
     name='create_render_admin'
 ),
-path(
-    'create-render-admin/',
-    views.create_render_admin
-),
+
 ]

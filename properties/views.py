@@ -863,15 +863,3 @@ def users_list(request):
     )
 
 
-def create_render_admin(request):
-
-    if User.objects.filter(username='renderadmin').exists():
-        return HttpResponse("Already exists")
-
-    User.objects.create_superuser(
-        username='renderadmin',
-        email='renderadmin@gmail.com',
-        password='Render123@'
-    )
-
-    return HttpResponse("Created")
