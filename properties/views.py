@@ -846,18 +846,8 @@ def edit_profile(request):
             'form': form
         }
     )
-@staff_member_required
-def users_list(request):
 
-    users = User.objects.all().order_by('-date_joined')
-
-    return render(
-        request,
-        'users_list.html',
-        {
-            'users': users
-        }
-    )
+        
 @login_required
 def users_list(request):
 
