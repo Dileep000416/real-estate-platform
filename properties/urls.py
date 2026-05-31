@@ -126,4 +126,9 @@ path(
     views.edit_profile,
     name='edit_profile'
 ),
+path(
+    'users-list/',
+    views.users_list,
+    name='users_list'
+),
 ]

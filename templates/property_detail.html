@@ -75,22 +75,25 @@
                     {{ property.description }}
                 </p>
 
-                <div class="map-section">
+              <div class="map-section">
 
-                    <h3>
-                        Property Location
-                    </h3>
+    <h3>Property Location</h3>
 
-                    <div class="map-container">
+    <div class="map-container">
 
-                        {{ property.map_link|safe }}
+        {% if property.map_link %}
+            <a href="{{ property.map_link }}"
+               target="_blank"
+               class="btn btn-primary">
+                📍 Open in Google Maps
+            </a>
+        {% else %}
+            <p>Location not available</p>
+        {% endif %}
 
-                    </div>
+    </div>
 
-                </div>
-
-            </div>
-
+</div>
 
             <div class="property-sidebar">
 

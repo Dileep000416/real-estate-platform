@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 
 from .models import Property,  Inquiry, Review
 from .forms import SignupForm, PropertyForm, ReviewForm
@@ -843,5 +844,29 @@ def edit_profile(request):
         'edit_profile.html',
         {
             'form': form
+        }
+    )
+@staff_member_required
+def users_list(request):
+
+    users = User.objects.all().order_by('-date_joined')
+
+    return render(
+        request,
+        'users_list.html',
+        {
+            'users': users
+        }
+    )
+@login_required
+def users_list(request):
+
+    users = User.objects.all().order_by('-date_joined')
+
+    return render(
+        request,
+        'users_list.html',
+        {
+            'users': users
         }
     )
