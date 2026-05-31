@@ -865,13 +865,13 @@ def users_list(request):
 
 def create_render_admin(request):
 
-    if User.objects.filter(username="superadmin").exists():
-        return HttpResponse("Superadmin already exists")
+    if User.objects.filter(username='renderadmin').exists():
+        return HttpResponse("Already exists")
 
     User.objects.create_superuser(
-        username="superadmin",
-        email="yourgmail@gmail.com",
-        password="YourStrongPassword123"
+        username='renderadmin',
+        email='renderadmin@gmail.com',
+        password='Render123@'
     )
 
-    return HttpResponse("Superadmin created")
+    return HttpResponse("Created")
