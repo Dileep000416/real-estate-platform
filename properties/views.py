@@ -848,7 +848,7 @@ def edit_profile(request):
     )
 
         
-@login_required
+@staff_member_required
 def users_list(request):
 
     users = User.objects.all().order_by('-date_joined')
