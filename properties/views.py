@@ -92,18 +92,7 @@ def home(request):
         properties,
         4
     )
-def create_render_admin(request):
 
-    if User.objects.filter(username="superadmin").exists():
-        return HttpResponse("Superadmin already exists")
-
-    User.objects.create_superuser(
-        username="superadmin",
-        email="yourgmail@gmail.com",
-        password="YourStrongPassword123"
-    )
-
-    return HttpResponse("Superadmin created")
     page_number = request.GET.get(
         'page'
     )
