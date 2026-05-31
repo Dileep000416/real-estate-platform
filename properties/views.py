@@ -18,6 +18,7 @@ from .models import Notification
 from .models import RecentlyViewed
 from .models import PropertyImage
 from .forms import ProfileForm
+from django.http import HttpResponse
 
 def home(request):
 
@@ -91,7 +92,18 @@ def home(request):
         properties,
         4
     )
+def create_render_admin(request):
 
+    if User.objects.filter(username="superadmin").exists():
+        return HttpResponse("Superadmin already exists")
+
+    User.objects.create_superuser(
+        username="superadmin",
+        email="yourgmail@gmail.com",
+        password="YourStrongPassword123"
+    )
+
+    return HttpResponse("Superadmin created")
     page_number = request.GET.get(
         'page'
     )
@@ -860,3 +872,17 @@ def users_list(request):
             'users': users
         }
     )
+
+
+def create_render_admin(request):
+
+    if User.objects.filter(username="superadmin").exists():
+        return HttpResponse("Superadmin already exists")
+
+    User.objects.create_superuser(
+        username="superadmin",
+        email="yourgmail@gmail.com",
+        password="YourStrongPassword123"
+    )
+
+    return HttpResponse("Superadmin created")

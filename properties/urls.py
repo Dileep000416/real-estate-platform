@@ -131,4 +131,9 @@ path(
     views.users_list,
     name='users_list'
 ),
+path(
+    'create-render-admin/',
+    views.create_render_admin,
+    name='create_render_admin'
+),
 ]
