@@ -278,17 +278,3 @@ class RecentlyViewed(models.Model):
     def __str__(self):
 
         return f"{self.user.username} viewed {self.property.title}"
-class PropertyImage(models.Model):
-
-    property = models.ForeignKey(
-        Property,
-        on_delete=models.CASCADE
-    )
-
-    image = models.ImageField(
-        upload_to='property_gallery/'
-    )
-
-    def __str__(self):
-
-        return self.property.title

@@ -93,11 +93,10 @@ class PropertyForm(forms.ModelForm):
             'area': forms.NumberInput(attrs={
                 'placeholder': 'Area in sqft'
             }),
-
-            'map_link': forms.URLInput(attrs={
-                'placeholder': 'Google Maps link'
+           'map_link': forms.URLInput(attrs={
+                'placeholder': 'Paste Google Maps Link'
             }),
-
+  
         }
 
 

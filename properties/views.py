@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import Property,  Inquiry, Review
 from .forms import SignupForm, PropertyForm, ReviewForm
@@ -848,8 +849,8 @@ def edit_profile(request):
         }
     )
 
-        
-@staff_member_required
+
+@user_passes_test(lambda u: u.is_superuser)
 def users_list(request):
 
     users = User.objects.all().order_by('-date_joined')
@@ -857,9 +858,6 @@ def users_list(request):
     return render(
         request,
         'users_list.html',
-        {
-            'users': users
-        }
+        {'users': users}
     )
-
 
