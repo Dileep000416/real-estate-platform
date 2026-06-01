@@ -131,6 +131,6 @@ path(
     views.users_list,
     name='users_list'
 ),
-path('create-admin/', views.create_admin),
+
 
 ]

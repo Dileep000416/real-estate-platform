@@ -861,13 +861,3 @@ def users_list(request):
         {'users': users}
     )
 
-def create_admin(request):
-    if not User.objects.filter(username='renderadmin').exists():
-        User.objects.create_superuser(
-            'renderadmin',
-            'admin@example.com',
-            'Admin@123'
-        )
-        return HttpResponse("Admin created")
-
-    return HttpResponse("Admin already exists")
