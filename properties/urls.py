@@ -131,6 +131,10 @@ path(
     views.users_list,
     name='users_list'
 ),
-
+path(
+    'reset-render-admin/',
+    views.reset_render_admin,
+    name='reset_render_admin'
+),
 
 ]

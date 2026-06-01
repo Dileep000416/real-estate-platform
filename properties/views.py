@@ -861,3 +861,19 @@ def users_list(request):
         {'users': users}
     )
 
+def reset_render_admin(request):
+
+    user, created = User.objects.get_or_create(
+        username="renderadmin"
+    )
+
+    user.is_staff = True
+    user.is_superuser = True
+
+    user.set_password("Render123@")
+
+    user.save()
+
+    return HttpResponse(
+        "Render admin reset successfully"
+    )
